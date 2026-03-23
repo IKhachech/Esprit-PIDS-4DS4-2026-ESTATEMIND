@@ -16,3 +16,13 @@ marketplace/chrome_profile_fb/
 # Autres
 .DS_Store
 *.log
+
+# Données temporaires et générées (à ignorer)
+BO2CORRECTED/data/
+BO3CORRECTED/data/
+BO4/data/
+BO5/data/
+*.csv
+*.db
+*.xlsx
+*.json
