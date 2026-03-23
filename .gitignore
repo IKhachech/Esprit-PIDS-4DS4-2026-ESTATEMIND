@@ -1,0 +1,18 @@
+# Environnement virtuel
+venv/
+__pycache__/
+*.pyc
+
+# Données générées / gros fichiers
+*.csv
+*.json
+data/
+BO*/dataset_*.csv
+Tunisia_Satellite_scraper/tunisia_satellite_data/
+
+# Profil Chrome (très important !)
+marketplace/chrome_profile_fb/
+
+# Autres
+.DS_Store
+*.log

@@ -1,0 +1,47 @@
+{
+  "gouvernorat_decode": {
+    "1": "Tunis",
+    "2": "Ariana",
+    "3": "Ben Arous",
+    "4": "Manouba",
+    "5": "Nabeul",
+    "6": "Zaghouan",
+    "7": "Bizerte",
+    "8": "Béja",
+    "9": "Jendouba",
+    "10": "Le Kef",
+    "11": "Siliana",
+    "12": "Sousse",
+    "13": "Monastir",
+    "14": "Mahdia",
+    "15": "Sfax",
+    "16": "Kairouan",
+    "17": "Kasserine",
+    "18": "Sidi Bouzid",
+    "19": "Gabès",
+    "20": "Medenine",
+    "21": "Tataouine",
+    "22": "Gafsa",
+    "23": "Tozeur",
+    "24": "Kébili"
+  },
+  "colonnes_finales": [
+    "gouvernorat",
+    "prix_m2",
+    "variation_prix_m2",
+    "note_google_moyenne",
+    "densite_population",
+    "densite_routes_km",
+    "nb_buildings_residentiel",
+    "indice_rentabilite_regionale"
+  ],
+  "colonnes_mc": [
+    "rendement_espere_mc",
+    "var_95_mc",
+    "cvar_mc",
+    "sharpe_mc",
+    "prob_gain_mc"
+  ],
+  "target": "indice_rentabilite_regionale",
+  "formule_target": "rendement_locatif×0.45 + score_macro×0.30 + attractivité×0.25"
+}
