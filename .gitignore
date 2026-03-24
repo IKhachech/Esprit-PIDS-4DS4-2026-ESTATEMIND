@@ -25,4 +25,6 @@ BO5/data/
 *.csv
 *.db
 *.xlsx
-*.json
+*.jsonAgents/logs/ 
+Agents/pipeline_runs.db 
+*.npy 
