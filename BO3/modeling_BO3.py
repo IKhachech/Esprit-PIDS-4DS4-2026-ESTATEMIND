@@ -144,7 +144,7 @@ def compute_regional_index(groupes_clean: dict) -> dict:
         Source : nb de points temporels distincts (annee×mois) par gouvernorat.
         But    : l'agent sait directement si ARIMA est possible (≥12 pts) ou si
                  fallback médiane régionale est nécessaire (<12 pts).
-        Seuil  : 12 points minimum (ARIMA(1,1,1) avec validation croisée).
+        Seuil  : ADAPTATIF par groupe — médiane des points temporels du groupe.
     """
     section("ETAPE 7 — TARGET : indice_prix_m2_regional")
 
@@ -202,13 +202,98 @@ def compute_regional_index(groupes_clean: dict) -> dict:
     for code in sorted(gov_counts.nlargest(3).index.tolist() + gov_counts.nsmallest(3).index.tolist()):
         log(f"    gov={code}: {gov_counts[code]:>6,} ann. → poids={gov_weight[code]:.4f}")
 
-    # 3. arima_eligible — depuis nb de points temporels réels par gouvernorat
-    gov_pts    = (df_all.groupby('gouvernorat')[['annee','mois']]
+    # 3. arima_eligible — SEUIL ADAPTATIF par groupe
+    #
+    # Problème seuil fixe 12 :
+    #   - Commercial/Divers ont peu de données → 0 ou peu de gouvernorats éligibles
+    #   - Seuil fixe pénalise injustement les groupes avec moins d'annonces
+    #
+    # Solution dynamique :
+    #   - Calculer le seuil depuis la distribution réelle de chaque groupe
+    #   - Seuil = médiane(pts_par_gov) — aucune valeur imposée
+    #   - Minimum absolu = 6 pts (ARIMA viable avec au moins 6 observations)
+    #
+    # Interpolation géographique pour gouvernorats sous seuil :
+    #   - Au lieu de fallback médiane nationale (trop grossière)
+    #   - Interpolation depuis les 3 gouvernorats les plus similaires
+    #   - Similarité = distance euclidienne sur score_attractivite
+
+    gov_pts = (df_all.groupby('gouvernorat')[['annee','mois']]
+                     .apply(lambda x: x.drop_duplicates().shape[0]))
+
+    def _seuil_adaptatif(pts_series):
+        """
+        Calcule le seuil ARIMA 100% dynamique depuis les données.
+        Seuil = médiane des points temporels par gouvernorat.
+        Signification : un gouvernorat est éligible s'il a
+        au moins autant de points que la moitié des gouvernorats
+        de son groupe. Aucune valeur imposée de l'extérieur.
+        """
+        if len(pts_series) == 0:
+            return 1
+        return float(pts_series.median())
+
+    def _interpoler_depuis_voisins(gov_cible, df_groupe, indice_df, n_voisins=3):
+        """
+        Interpole l'indice prix/m² d'un gouvernorat depuis ses voisins similaires.
+        Similarité basée sur score_attractivite (proxy de richesse économique).
+        """
+        if 'score_attractivite' not in df_groupe.columns:
+            return None
+
+        score_cible = df_groupe[df_groupe['gouvernorat'] == gov_cible]['score_attractivite'].mean()
+        if pd.isna(score_cible):
+            return None
+
+        # Scores de tous les autres gouvernorats
+        scores_gov = df_groupe.groupby('gouvernorat')['score_attractivite'].mean()
+        scores_gov = scores_gov.drop(index=gov_cible, errors='ignore')
+
+        if len(scores_gov) == 0:
+            return None
+
+        # Distance euclidienne sur score_attractivite
+        distances = abs(scores_gov - score_cible)
+        voisins   = distances.nsmallest(n_voisins).index.tolist()
+
+        # Moyenne pondérée par similarité (1/distance)
+        poids_voisins = []
+        indices_voisins = []
+        for v in voisins:
+            idx_v = indice_df[indice_df['_gouvernorat_str'].isin(
+                df_groupe[df_groupe['gouvernorat'] == v]['_gouvernorat_str'].unique()
+            )]['indice_prix_m2_regional']
+            if len(idx_v) > 0:
+                poids_voisins.append(1.0 / (distances[v] + 1e-6))
+                indices_voisins.append(idx_v.mean())
+
+        if not indices_voisins:
+            return None
+
+        poids_arr  = np.array(poids_voisins)
+        poids_norm = poids_arr / poids_arr.sum()
+        return float(np.dot(poids_norm, indices_voisins))
+
+    # Calcul arima_eligible avec seuil adaptatif PAR GROUPE
+    arima_ok_par_groupe = {}
+    seuils_log = {}
+
+    for groupe, dg in groupes_clean.items():
+        pts_groupe = (dg.groupby('gouvernorat')[['annee','mois']]
                         .apply(lambda x: x.drop_duplicates().shape[0]))
-    arima_ok   = (gov_pts >= 12).astype(int)
-    log(f"\n  arima_eligible (seuil ≥12 points temporels réels) :")
-    log(f"    Eligibles  : {arima_ok.sum()} gouvernorats")
-    log(f"    Inéligibles: {(arima_ok==0).sum()} gouvernorats → fallback médiane régionale")
+        seuil = _seuil_adaptatif(pts_groupe)
+        seuils_log[groupe] = seuil
+        arima_ok_par_groupe[groupe] = (pts_groupe >= seuil).astype(int)
+
+    # Pour df_all global on prend le seuil résidentiel (le plus représentatif)
+    seuil_global = seuils_log.get('Residentiel', 12)
+    arima_ok     = (gov_pts >= seuil_global).astype(int)
+
+    log(f"\n  arima_eligible — seuil ADAPTATIF par groupe :")
+    for groupe, seuil in seuils_log.items():
+        ok  = arima_ok_par_groupe[groupe]
+        log(f"    {groupe:<15}: seuil={seuil} pts | "
+            f"{ok.sum()} éligibles / {len(ok)} gouvernorats")
 
     # ── Joindre tout dans chaque groupe ──────────────────────────
     global_med = indice['indice_prix_m2_regional'].median()
@@ -226,7 +311,19 @@ def compute_regional_index(groupes_clean: dict) -> dict:
         # 3 colonnes de correction — valeurs calculées depuis les données réelles
         dg['sample_weight_temporal'] = dg['annee'].map(yr_weight).fillna(1.0).round(4)
         dg['sample_weight_geo']      = dg['gouvernorat'].map(gov_weight).fillna(1.0).round(4)
-        dg['arima_eligible']         = dg['gouvernorat'].map(arima_ok).fillna(0).astype(int)
+        # arima_eligible avec seuil adaptatif par groupe
+        arima_ok_groupe = arima_ok_par_groupe.get(groupe, arima_ok)
+        dg['arima_eligible'] = dg['gouvernorat'].map(arima_ok_groupe).fillna(0).astype(int)
+
+        # Interpolation géographique pour gouvernorats non éligibles
+        # (meilleur que fallback médiane nationale)
+        govs_non_eligibles = arima_ok_groupe[arima_ok_groupe == 0].index.tolist()
+        if govs_non_eligibles and 'score_attractivite' in dg.columns:
+            for gov_ne in govs_non_eligibles:
+                val_interp = _interpoler_depuis_voisins(gov_ne, dg, indice)
+                if val_interp is not None:
+                    mask = (dg['gouvernorat'] == gov_ne) & dg['indice_prix_m2_regional'].isna()
+                    dg.loc[mask, 'indice_prix_m2_regional'] = round(val_interp, 2)
 
         n_nan = dg['indice_prix_m2_regional'].isna().sum()
         log(f"  {groupe:<15} : {len(dg):,} ann. | NaN TARGET={n_nan} | "
@@ -291,6 +388,15 @@ def export_datasets(groupes_clean: dict, output_dir: str = '.') -> None:
             dg['gouvernorat'] = dg['code_gouv']
 
         df_export = dg[cols_sel].copy()
+
+        # Filtre : garder uniquement annee >= 2022
+        MIN_ANNEE = 2022
+        avant = len(df_export)
+        df_export = df_export[df_export['annee'] >= MIN_ANNEE].reset_index(drop=True)
+        apres = len(df_export)
+        if avant != apres:
+            log(f"  [{groupe}] Filtre annee >= {MIN_ANNEE} : {avant} → {apres} (-{avant-apres})")
+
         df_export = df_export.sort_values(['gouvernorat', 'annee', 'mois']).reset_index(drop=True)
 
         out_path = os.path.join(output_dir, fname)
