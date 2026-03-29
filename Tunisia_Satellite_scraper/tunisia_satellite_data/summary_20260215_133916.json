@@ -1,0 +1,45 @@
+{
+  "timestamp": "20260215_133916",
+  "data_types": [
+    "amenities",
+    "buildings",
+    "roads",
+    "landuse",
+    "transport",
+    "population"
+  ],
+  "total_records": {
+    "amenities": 5511,
+    "buildings": 95097,
+    "roads": 113616,
+    "landuse": 9793,
+    "transport": 1388,
+    "population": 24
+  },
+  "cities_covered": [
+    "Tunis",
+    "Sfax",
+    "Sousse",
+    "Kairouan",
+    "Bizerte",
+    "Gabès",
+    "Ariana",
+    "Gafsa",
+    "Monastir",
+    "Ben Arous",
+    "Kasserine",
+    "Médenine",
+    "Nabeul",
+    "Tataouine",
+    "Béja",
+    "Jendouba",
+    "Mahdia",
+    "Sidi Bouzid",
+    "Zaghouan",
+    "Siliana",
+    "Kef",
+    "Tozeur",
+    "Kebili",
+    "Manouba"
+  ]
+}
