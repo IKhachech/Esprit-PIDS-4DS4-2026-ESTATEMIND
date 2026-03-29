@@ -1,0 +1,1 @@
+venv/echo __pycache__/echo *.pycecho .envecho *.logecho *.csvecho *.xlsxecho *.dbecho *.npyecho data/echo Agents/logs/echo Agents/pipeline_runs.dbecho marketplace/chrome_profile_fb/
