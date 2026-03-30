@@ -1,6 +1,0 @@
-2026/02/16-21:32:07.655 5f94 Reusing MANIFEST C:\Users\Emna\Desktop\marketplace\chrome_profile_fb\Default\Local Storage\leveldb/MANIFEST-000001
-2026/02/16-21:32:07.660 5f94 Recovering log #44
-2026/02/16-21:32:07.662 5f94 Reusing old log C:\Users\Emna\Desktop\marketplace\chrome_profile_fb\Default\Local Storage\leveldb/000044.log 
-2026/02/16-22:19:08.362 25e8 Level-0 table #49: started
-2026/02/16-22:19:08.366 25e8 Level-0 table #49: 11938 bytes OK
-2026/02/16-22:19:08.368 25e8 Delete type=0 #44
