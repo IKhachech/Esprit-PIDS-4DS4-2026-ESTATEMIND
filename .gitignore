@@ -1,1 +1,35 @@
-venv/echo __pycache__/echo *.pycecho .envecho *.logecho *.csvecho *.xlsxecho *.dbecho *.npyecho data/echo Agents/logs/echo Agents/pipeline_runs.dbecho marketplace/chrome_profile_fb/
+# ==================== Environnement virtuel ====================
+venv/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# ==================== Données et fichiers volumineux ====================
+*.csv
+*.json
+*.xlsx
+*.db
+*.npy
+*.log
+
+# Dossiers de données
+data/
+BO*/dataset_*.csv
+Tunisia_Satellite_scraper/tunisia_satellite_data/
+BO2CORRECTED/data/
+BO3CORRECTED/data/
+BO4/data/
+BO5/data/
+
+# Logs et runs
+Agents/logs/
+Agents/pipeline_runs.db
+
+# ==================== Chrome Profile (très important) ====================
+marketplace/chrome_profile_fb/
+
+# ==================== Autres ====================
+.DS_Store
+.env
+*.tmp
