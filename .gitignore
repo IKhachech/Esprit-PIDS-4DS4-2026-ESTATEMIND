@@ -22,6 +22,12 @@ BO3CORRECTED/data/
 BO4/data/
 BO5/data/
 
+
+# Dossiers de modèles
+**/models/*.pkl
+**/models/*.pt
+**/models/*.joblib
+
 # Logs et runs
 Agents/logs/
 Agents/pipeline_runs.db

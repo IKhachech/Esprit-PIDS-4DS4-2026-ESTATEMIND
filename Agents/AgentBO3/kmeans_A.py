@@ -102,16 +102,32 @@ def run_kmeans(groupes):
 
 
 if __name__ == '__main__':
+    # Chemin corrigé et plus visible
     dossier = os.path.normpath(os.path.join(
         os.path.dirname(os.path.abspath(__file__)), '..', '..', 'BO3'))
-    print(f"Dossier : {dossier}")
+    
+    print(f" Dossier recherché : {dossier}")
+    print(f" Chemin absolu du script : {os.path.abspath(__file__)}\n")
+
     groupes = {}
     for nom in ['Residentiel', 'Foncier', 'Commercial', 'Divers']:
         f = os.path.join(dossier, f'{nom.lower()}_BO3.xlsx')
+        print(f" Vérification : {f}")
+        
         if os.path.exists(f):
             groupes[nom] = pd.read_excel(f)
-            print(f"  {nom} : {len(groupes[nom]):,} lignes")
+            print(f" {nom} chargé → {len(groupes[nom]):,} lignes")
         else:
-            print(f"  {nom} manquant")
+            print(f" {nom} manquant → {f}")
+
+    print(f"\n Total groupes trouvés : {len(groupes)}")
+
     if groupes:
         run_kmeans(groupes)
+    else:
+        print("\n ERREUR : Aucun fichier trouvé !")
+        print("Vérifie que tes fichiers s'appellent exactement :")
+        print("   - residentiel_BO3.xlsx")
+        print("   - foncier_BO3.xlsx")
+        print("   - commercial_BO3.xlsx")
+        print("   - divers_BO3.xlsx")
