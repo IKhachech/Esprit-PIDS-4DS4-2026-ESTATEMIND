@@ -1,13 +1,5 @@
 """
 kmeans_A.py — K-means Segmentation Géographique
-================================================
-Features adaptées par groupe pour maximiser le Silhouette Score :
-  Résidentiel  : score + infra + macro (Sil ≈ 0.64)
-  Foncier      : prix + glissement_immo (Sil ≈ 0.63)
-  Commercial   : features enrichies (Sil ≈ 0.36)
-  Divers       : features enrichies (Sil ≈ 0.40)
-
-Usage : python kmeans_A.py
 """
 import os, pickle, warnings
 import numpy as np
@@ -23,21 +15,18 @@ from sklearn.metrics import (silhouette_score,
 MODELS_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'models')
 os.makedirs(MODELS_DIR, exist_ok=True)
 
-# Features adaptées par groupe (validées sur les données)
+# Features validées par tests exhaustifs — maximisent le Silhouette Score
 FEATURES_PAR_GROUPE = {
     'Residentiel': ['score_attractivite', 'nb_infra', 'nb_commerce',
                     'indice_prix_m2_regional',
                     'inflation_glissement_annuel', 'croissance_pib_trim',
                     'glissement_immo_trim'],
-    'Foncier':     ['indice_prix_m2_regional', 'glissement_immo_trim'],
-    'Commercial':  ['score_attractivite', 'nb_infra', 'nb_commerce',
-                    'indice_prix_m2_regional',
-                    'inflation_glissement_annuel', 'glissement_immo_trim'],
-    'Divers':      ['score_attractivite', 'nb_infra', 'nb_commerce',
-                    'indice_prix_m2_regional',
-                    'inflation_glissement_annuel', 'glissement_immo_trim'],
+    'Foncier':     ['indice_prix_m2_regional',
+                    'glissement_immo_trim'],
+    'Commercial':  ['indice_prix_m2_regional',
+                    'glissement_immo_trim'],
+    'Divers':      ['indice_prix_m2_regional'],
 }
-# Fallback si le groupe n'est pas dans le dictionnaire
 FEATURES_DEFAULT = ['score_attractivite', 'nb_infra', 'nb_commerce',
                     'indice_prix_m2_regional']
 
@@ -51,13 +40,11 @@ def run_kmeans(groupes):
     silhouettes = []
 
     for groupe, df in groupes.items():
-        # Filtre p5-p95 pour enlever les outliers
         t    = df['indice_prix_m2_regional']
         p5   = t.quantile(0.05)
         p95  = t.quantile(0.95)
         df_c = df[(t >= p5) & (t <= p95)].copy()
 
-        # Features adaptées au groupe
         features = FEATURES_PAR_GROUPE.get(groupe, FEATURES_DEFAULT)
         feats    = [f for f in features if f in df_c.columns]
         gov_df   = df_c.groupby('gouvernorat')[feats].mean().reset_index()
@@ -70,7 +57,6 @@ def run_kmeans(groupes):
         scaler = StandardScaler()
         X_s    = scaler.fit_transform(gov_df[feats].values)
 
-        # Tester k=2 à min(8, n_gov-1) → garder le meilleur Silhouette
         best_k, best_sil = 2, -1
         for k in range(2, min(9, n_gov)):
             lbl = KMeans(n_clusters=k, random_state=42, n_init=15).fit_predict(X_s)
@@ -124,8 +110,8 @@ if __name__ == '__main__':
         f = os.path.join(dossier, f'{nom.lower()}_BO3.xlsx')
         if os.path.exists(f):
             groupes[nom] = pd.read_excel(f)
-            print(f"  ✔ {nom} : {len(groupes[nom]):,} lignes")
+            print(f"  {nom} : {len(groupes[nom]):,} lignes")
         else:
-            print(f"  ✗ {nom} manquant")
+            print(f"  {nom} manquant")
     if groupes:
         run_kmeans(groupes)
