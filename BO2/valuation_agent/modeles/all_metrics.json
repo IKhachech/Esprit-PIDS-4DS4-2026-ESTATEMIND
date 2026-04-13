@@ -1,0 +1,29 @@
+{
+  "residentiel_vente": {
+    "r2_pm2": 0.4915,
+    "r2_total": 0.6859,
+    "mae": 119208.09,
+    "mape": 23.0723,
+    "n_train": 4747,
+    "n_test": 1187,
+    "features": 55
+  },
+  "residentiel_location": {
+    "r2_pm2": 0.5452,
+    "r2_total": 0.7349,
+    "mae": 511.59,
+    "mape": 21.4534,
+    "n_train": 5973,
+    "n_test": 1494,
+    "features": 55
+  },
+  "foncier": {
+    "r2_pm2": 0.5357,
+    "r2_total": 0.4483,
+    "mae": 263264.51,
+    "mape": 62.35,
+    "n_train": 1801,
+    "n_test": 451,
+    "features": 34
+  }
+}

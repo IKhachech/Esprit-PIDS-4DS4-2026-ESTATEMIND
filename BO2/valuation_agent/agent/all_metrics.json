@@ -1,0 +1,20 @@
+{
+  "residentiel": {
+    "r2_pm2": 0.902,
+    "r2_total": 0.8589,
+    "mae": 40814.82,
+    "mape": 22.2838,
+    "n_train": 9828,
+    "n_test": 2457,
+    "features": 60
+  },
+  "foncier": {
+    "r2_pm2": 0.4811,
+    "r2_total": 0.5406,
+    "mae": 255815.77,
+    "mape": 69.2123,
+    "n_train": 1756,
+    "n_test": 439,
+    "features": 50
+  }
+}

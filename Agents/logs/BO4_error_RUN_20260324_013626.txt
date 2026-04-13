@@ -1,8 +1,0 @@
-Traceback (most recent call last):
-  File "C:\Users\imen\Desktop\agent_scraper\Agents\agent_collecte.py", line 453, in run_single
-    error_msg, nb_lignes = _run_pipeline_subprocess(name, run_id)
-                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\imen\Desktop\agent_scraper\Agents\agent_collecte.py", line 392, in _run_pipeline_subprocess
-    proc = subprocess.run(
-           ^^^^^^^^^^
-NameError: name 'subprocess' is not defined

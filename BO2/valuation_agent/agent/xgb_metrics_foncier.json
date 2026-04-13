@@ -1,0 +1,12 @@
+{
+  "mae": 255815.76642839782,
+  "r2": 0.5406266906318276,
+  "mape": 69.21231133349633,
+  "r2_pm2": 0.4810528206830402,
+  "n_train": 1756,
+  "n_test": 439,
+  "bert_dims": 8,
+  "segment": "foncier",
+  "target_mode": "prix_m2",
+  "model": "XGBoost+BERT_foncier"
+}

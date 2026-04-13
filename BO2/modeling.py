@@ -1148,6 +1148,7 @@ TARGET_COLS = [
     'prix_region_median',      # contexte régional (zones sous-représentées)
     # ── NLP — XGBoost/RF ────────────────────────────────────────
     'text_embedding_score',    # score BERT/LSA 0-1
+    'description',             # texte brut annonce → BERT réel
     # ── Vision — CNN/CLIP uniquement (exclure de X XGBoost) ─────
     'image_url',               # URL image
     # ── Target ──────────────────────────────────────────────────
@@ -1173,6 +1174,7 @@ PROPAGATE_COLS = [
     'text_embedding_score', 'image_quality_score',
     'multimodal_score', 'prix_transaction_estimated', 'nb_pieces',
     'gouvernorat', 'ville_encoded', 'type_bien', 'prix_region_median',
+    'description',
 ]
 
 
