@@ -243,7 +243,7 @@ def deduplicate(df):
     log(f"Passe 1 - Stricts                      : -{n1-len(df):,} supprimes")
     n2 = len(df)
     df['_d'] = df.get('description', pd.Series(['']*len(df))).fillna('').str.lower().str.strip()
-    df['_g'] = df['gouvernorat'].fillna('').str.lower().str.strip()
+    df['_g'] = df.get('gouvernorat', pd.Series(['']*len(df))).fillna('').str.lower().str.strip()
     df['_p'] = df['prix'].astype(str)
     mask = df.duplicated(subset=['_d','_g','_p'], keep='first') & (df['_d'] != '')
     df   = df[~mask].drop(columns=['_d','_g','_p'])

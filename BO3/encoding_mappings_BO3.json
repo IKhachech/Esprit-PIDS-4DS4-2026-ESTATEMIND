@@ -34,14 +34,24 @@
     "0": "Basse saison",
     "1": "Haute saison (mars-mai, sept-nov)"
   },
-  "trimestre": {
-    "1": "T1 Jan-Mar",
-    "2": "T2 Avr-Jun",
-    "3": "T3 Jul-Sep",
-    "4": "T4 Oct-Dec"
+  "zone_geographique": {
+    "0": "Grand Tunis",
+    "1": "Littoral Nord",
+    "2": "Sahel",
+    "3": "Centre/Intérieur",
+    "4": "Sud"
   },
-  "semestre": {
-    "1": "S1 Jan-Jun",
-    "2": "S2 Jul-Dec"
+  "trimestre": {
+    "1": "T1",
+    "2": "T2",
+    "3": "T3",
+    "4": "T4"
+  },
+  "ameliorations": {
+    "1": "Lissage robuste indice (winsorisation + rolling median)",
+    "2": "Imputation hierarchique petits gouvernorats",
+    "3": "Variables discriminantes (zone_geo + emergent + liquidite + volatilite)",
+    "4": "Outliers MAD par gov x type",
+    "5": "Indices stratifies loc/ven exportes (indice_loc_lisse, indice_ven_lisse)"
   }
 }

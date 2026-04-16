@@ -435,6 +435,7 @@ TARGET_COLS = [
     # ── Géographie ──────────────────────────────────────────────
     'gouvernorat',                  # code 1-24 — ARIMA + K-means + CP + Causaux
     'ville_encoded',                # code gov*1000+rang — granularité ville (comme BO2)
+    'zone_geographique',            # 0=Grand Tunis, 1=Littoral Nord, 2=Sahel, 3=Centre, 4=Sud — K-means
     # ── Temporel ────────────────────────────────────────────────
     'annee',                        # année publication — ARIMA + CP + Causaux
     'mois',                         # mois (1-12) — ARIMA + CP
@@ -449,6 +450,10 @@ TARGET_COLS = [
     'inflation_glissement_annuel',  # IPC glissement annuel mensuel % — ARIMA + K-means + Causaux
     'croissance_pib_trim',          # PIB trimestriel % — ARIMA + Causaux
     'glissement_immo_trim',         # INS glissement prix immo par type×trimestre — ARIMA + CP
+    # ── Variables discriminantes (calculées depuis données) ──────
+    'indice_liquidite',             # ln(nb_annonces / mois_couverts) — K-means
+    'volatilite_prix_trim',         # σ trimestriel normalisé — K-means + LSTM
+    'potentiel_emergent',           # score 0-1 basé sur tendance × attrac × nb_pts — K-means
     # ── Corrections déséquilibre (calculées depuis données réelles scrapées) ──
     # Ces 3 colonnes NE CONTIENNENT AUCUNE valeur manuelle ou inventée.
     # Elles sont calculées uniquement depuis la distribution des annonces scrapées.
@@ -457,6 +462,8 @@ TARGET_COLS = [
     'arima_eligible',               # 1 si ≥12 points temporels réels → agent choisit ARIMA ou fallback
     # ── TARGET ──────────────────────────────────────────────────
     'indice_prix_m2_regional',      # mean(prix_m2) × gouvernorat × annee × mois — TOUS
+    'indice_loc_lisse',             # indice location lissé (exporté pour LSTM/PELT)
+    'indice_ven_lisse',             # indice vente lissé (exporté pour LSTM/PELT)
 ]
 
 FICHIERS_ML = {
