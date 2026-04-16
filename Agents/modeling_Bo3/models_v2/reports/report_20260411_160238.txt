@@ -1,0 +1,49 @@
+========================================
+AGENT PRÉDICTIF — TENDANCES MARCHE TUNISIER
+Run: 20260411_160238
+========================================
+
+RESUME EXECUTIF
+---------------
++ Segments traites: Commercial, Foncier, Residentiel
++ Clusters CENTRAL: Zone Emergente - Fort Potentiel, Marche Commercial Secondaire, Zone Commerciale Active - Croissance, Marche Commercial Secondaire - C3, Foncier Accessible - Croissance Moderee
++ Clusters INDICATIF_SEULEMENT: Foncier en Developpement - Hausse Active - C3
++ Tendance dominante: hausse (+19.5% moyen)
+
+PREVISIONS PAR SEGMENT
+-----------------------
+
+
+[Commercial]
+  Zone Emergente - Fort Potentiel [reco=SCENARIO] -> Prev: 0 TND (+-9.4%) | MAPE: 23.4%
+  Marche Commercial Secondaire [reco=SCENARIO] -> Prev: 0 TND (+-25.9%) | MAPE: 6.2%
+  Zone Commerciale Active - Croissance [reco=SCENARIO] -> Prev: 0 TND (+-34.5%) | MAPE: 7.5%
+  Marche Commercial Secondaire - C3 [reco=SCENARIO] -> Prev: 0 TND (+-16.6%) | MAPE: 12.4%
+
+[Foncier]
+  Foncier Accessible - Croissance Moderee [reco=SCENARIO] -> Prev: 0 TND (+-15.6%) | MAPE: 26.6%
+  Foncier Rural - Stabilite [reco=CENTRAL] -> Prev: 0 TND (+-21.2%) | MAPE: 9.2%
+  Foncier en Developpement - Hausse Active [reco=SCENARIO] -> Prev: 0 TND (+-26.0%) | MAPE: 4.4%
+  Foncier en Developpement - Hausse Active - C3 [reco=INDICATIF_SEULEMENT] -> Prev: 0 TND (+-13.2%) | MAPE: nan%
+
+[Residentiel]
+  Marche Emergent - Fort Potentiel [reco=SCENARIO] -> Prev: 0 TND (+-11.2%) | MAPE: 18.5%
+  Marche Stable - Prix Contenus [reco=SCENARIO] -> Prev: 0 TND (+-29.9%) | MAPE: 13.6%
+  Marche Dynamique - Croissance Active [reco=SCENARIO] -> Prev: 0 TND (+-23.8%) | MAPE: 6.2%
+  Marche Stable - Prix Contenus - C3 [reco=SCENARIO] -> Prev: 0 TND (+-6.3%) | MAPE: 92.1%
+
+ALERTES
+-------
+
+! Marche Commercial Secondaire: FORTE HAUSSE DETECTÉE (+25.9%)
+! Zone Commerciale Active - Croissance: FORTE HAUSSE DETECTÉE (+34.5%)
+! Foncier en Developpement - Hausse Active: FORTE HAUSSE DETECTÉE (+26.0%)
+! Foncier en Developpement - Hausse Active - C3: DONNEES INSUFFISANTES
+! Marche Stable - Prix Contenus: FORTE HAUSSE DETECTÉE (+29.9%)
+! Marche Stable - Prix Contenus - C3: FIABILITE FAIBLE (MAPE 92.1%)
+
+QUALITE DU RUN
+--------------
+
++ Rapport genere: 2026-04-11 16:02:38
++ Fichiers sources: residentiel_BO3.xlsx, foncier_BO3.xlsx, commercial_BO3.xlsx

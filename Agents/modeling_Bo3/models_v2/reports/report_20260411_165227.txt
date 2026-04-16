@@ -1,0 +1,47 @@
+========================================
+AGENT PRÉDICTIF — TENDANCES MARCHE TUNISIER
+Run: 20260411_165227
+========================================
+
+RESUME EXECUTIF
+---------------
++ Segments traites: Commercial, Foncier, Residentiel
++ Clusters CENTRAL: Marche Commercial Secondaire, Marche Commercial Secondaire - C1, Zone Emergente - Fort Potentiel, Foncier en Developpement - Hausse Active, Foncier Rural - Stabilite
++ Tendance dominante: hausse (+19.8% moyen)
+
+PREVISIONS PAR SEGMENT
+-----------------------
+
+
+[Commercial]
+  Marche Commercial Secondaire [reco=SCENARIO] -> Prev: 0 TND (+-30.0%) | MAPE: 12.1%
+  Marche Commercial Secondaire - C1 [reco=SCENARIO] -> Prev: 0 TND (+-25.9%) | MAPE: 6.2%
+  Zone Emergente - Fort Potentiel [reco=SCENARIO] -> Prev: 0 TND (+-5.4%) | MAPE: 21.4%
+
+[Foncier]
+  Foncier en Developpement - Hausse Active [reco=SCENARIO] -> Prev: 0 TND (+-2.3%) | MAPE: 28.7%
+  Foncier Rural - Stabilite [reco=CENTRAL] -> Prev: 0 TND (+-25.4%) | MAPE: 7.1%
+  Foncier en Developpement - Hausse Active - C2 [reco=SCENARIO] -> Prev: 0 TND (+-26.0%) | MAPE: 4.4%
+  Foncier Accessible - Croissance Moderee [reco=SCENARIO] -> Prev: 0 TND (+-15.3%) | MAPE: 89.3%
+
+[Residentiel]
+  Marche Emergent - Fort Potentiel [reco=SCENARIO] -> Prev: 0 TND (+-11.2%) | MAPE: 18.5%
+  Marche Stable - Prix Contenus [reco=SCENARIO] -> Prev: 0 TND (+-29.9%) | MAPE: 13.6%
+  Marche Dynamique - Croissance Active [reco=SCENARIO] -> Prev: 0 TND (+-26.6%) | MAPE: 6.4%
+
+ALERTES
+-------
+
+! Marche Commercial Secondaire: FORTE HAUSSE DETECTÉE (+30.0%)
+! Marche Commercial Secondaire - C1: FORTE HAUSSE DETECTÉE (+25.9%)
+! Foncier Rural - Stabilite: FORTE HAUSSE DETECTÉE (+25.4%)
+! Foncier en Developpement - Hausse Active - C2: FORTE HAUSSE DETECTÉE (+26.0%)
+! Foncier Accessible - Croissance Moderee: FIABILITE FAIBLE (MAPE 89.3%)
+! Marche Stable - Prix Contenus: FORTE HAUSSE DETECTÉE (+29.9%)
+! Marche Dynamique - Croissance Active: FORTE HAUSSE DETECTÉE (+26.6%)
+
+QUALITE DU RUN
+--------------
+
++ Rapport genere: 2026-04-11 16:53:03
++ Fichiers sources: residentiel_BO3.xlsx, foncier_BO3.xlsx, commercial_BO3.xlsx

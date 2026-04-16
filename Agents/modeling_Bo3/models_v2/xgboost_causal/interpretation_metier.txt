@@ -1,0 +1,10 @@
+AVERTISSEMENT : R² LOO negatif attendu sur <60 obs.
+Les metriques predictives ne sont pas l'objectif.
+Utiliser les SHAP [CONFIRME] pour l'interpretation causale.
+
+Dans le segment Commercial, les drivers causaux confirmes sont: nb_commerce, nb_villes, momentum_prix. Ces variables expliquent les dynamiques recentes de prix avec stabilite statistique.
+
+Dans le segment Foncier, les drivers causaux confirmes sont: nb_villes, nb_commerce, momentum_prix. Ces variables expliquent les dynamiques recentes de prix avec stabilite statistique.
+
+Dans le segment Residentiel, les drivers causaux confirmes sont: nb_commerce, score_attractivite. Ces variables expliquent les dynamiques recentes de prix avec stabilite statistique.
+

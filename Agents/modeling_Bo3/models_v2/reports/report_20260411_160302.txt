@@ -1,0 +1,44 @@
+========================================
+AGENT PRÉDICTIF — TENDANCES MARCHE TUNISIER
+Run: 20260411_160302
+========================================
+
+RESUME EXECUTIF
+---------------
++ Segments traites: Commercial, Foncier, Residentiel
++ Clusters CENTRAL: Marche Commercial Secondaire, Marche Commercial Secondaire - C1, Zone Emergente - Fort Potentiel, Foncier Accessible - Croissance Moderee, Foncier en Developpement - Hausse Active
++ Tendance dominante: hausse (+17.5% moyen)
+
+PREVISIONS PAR SEGMENT
+-----------------------
+
+
+[Commercial]
+  Marche Commercial Secondaire [reco=SCENARIO] -> Prev: 0 TND (+-18.4%) | MAPE: 11.2%
+  Marche Commercial Secondaire - C1 [reco=SCENARIO] -> Prev: 0 TND (+-27.3%) | MAPE: 8.1%
+  Zone Emergente - Fort Potentiel [reco=SCENARIO] -> Prev: 0 TND (+-5.4%) | MAPE: 21.4%
+
+[Foncier]
+  Foncier Accessible - Croissance Moderee [reco=CENTRAL] -> Prev: 0 TND (+-23.3%) | MAPE: 6.8%
+  Foncier en Developpement - Hausse Active [reco=SCENARIO] -> Prev: 0 TND (+-2.3%) | MAPE: 28.7%
+  Foncier Rural - Stabilite [reco=CENTRAL] -> Prev: 0 TND (+-24.6%) | MAPE: 10.7%
+  Foncier Accessible - Croissance Moderee - C3 [reco=SCENARIO] -> Prev: 0 TND (+-16.3%) | MAPE: 55.8%
+
+[Residentiel]
+  Marche Emergent - Fort Potentiel [reco=SCENARIO] -> Prev: 0 TND (+-11.2%) | MAPE: 18.5%
+  Marche Dynamique - Croissance Active [reco=SCENARIO] -> Prev: 0 TND (+-9.3%) | MAPE: 15.0%
+  Marche Stable - Prix Contenus [reco=SCENARIO] -> Prev: 0 TND (+-29.9%) | MAPE: 13.6%
+  Marche Premium - Faible Volatilite [reco=SCENARIO] -> Prev: 0 TND (+-24.2%) | MAPE: 5.8%
+
+ALERTES
+-------
+
+! Marche Commercial Secondaire - C1: FORTE HAUSSE DETECTÉE (+27.3%)
+! Foncier Accessible - Croissance Moderee - C3: FIABILITE FAIBLE (MAPE 55.8%)
+! Marche Stable - Prix Contenus: FORTE HAUSSE DETECTÉE (+29.9%)
+
+QUALITE DU RUN
+--------------
+
++ Rapport genere: 2026-04-11 16:03:33
++ Fichiers sources: residentiel_BO3.xlsx, foncier_BO3.xlsx, commercial_BO3.xlsx
