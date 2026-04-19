@@ -1,0 +1,200 @@
+{
+  "appart_vente": {
+    "tabulaire": {
+      "r2": 0.5892,
+      "mae": 100407.47,
+      "rmse": 208464.01
+    },
+    "image_seule": {
+      "r2": 0.0762,
+      "mae": 172308.13,
+      "rmse": 312976.9
+    },
+    "fusion": {
+      "r2": 0.6345,
+      "mae": 93580.09,
+      "rmse": 196635.1
+    },
+    "bayesien": {
+      "r2": 0.6347,
+      "mae": 93573.39,
+      "std_moyenne": 0.101222,
+      "fourchette_tnd": 58278.0,
+      "fourchette_pct": 16.7
+    },
+    "image_contribution": {
+      "r2_gain": 0.0453,
+      "mae_gain": 6827.38,
+      "images_aident": true
+    },
+    "feature_importance": {
+      "tabulaire_pct": 66.1,
+      "image_pct": 33.9
+    }
+  },
+  "appart_location": {
+    "tabulaire": {
+      "r2": 0.6903,
+      "mae": 479.76,
+      "rmse": 754.27
+    },
+    "image_seule": {
+      "r2": 0.1691,
+      "mae": 828.37,
+      "rmse": 1227.29
+    },
+    "fusion": {
+      "r2": 0.6924,
+      "mae": 471.84,
+      "rmse": 751.69
+    },
+    "bayesien": {
+      "r2": 0.6926,
+      "mae": 471.68,
+      "std_moyenne": 0.128114,
+      "fourchette_tnd": 379.0,
+      "fourchette_pct": 21.1
+    },
+    "image_contribution": {
+      "r2_gain": 0.0021,
+      "mae_gain": 7.92,
+      "images_aident": false
+    },
+    "feature_importance": {
+      "tabulaire_pct": 71.3,
+      "image_pct": 28.7
+    }
+  },
+  "maison_vente": {
+    "tabulaire": {
+      "r2": 0.4405,
+      "mae": 320360.03,
+      "rmse": 673138.8
+    },
+    "image_seule": {
+      "r2": 0.033,
+      "mae": 476474.76,
+      "rmse": 892985.5
+    },
+    "fusion": {
+      "r2": 0.3916,
+      "mae": 331666.82,
+      "rmse": 701944.31
+    },
+    "bayesien": {
+      "r2": 0.4405,
+      "mae": 320379.1,
+      "std_moyenne": 0.208955,
+      "fourchette_tnd": 206239.0,
+      "fourchette_pct": 34.4
+    },
+    "image_contribution": {
+      "r2_gain": -0.0489,
+      "mae_gain": -11306.79,
+      "images_aident": false
+    },
+    "feature_importance": {
+      "tabulaire_pct": 57.1,
+      "image_pct": 42.9
+    }
+  },
+  "maison_location": {
+    "tabulaire": {
+      "r2": 0.7531,
+      "mae": 873.08,
+      "rmse": 1129.59
+    },
+    "image_seule": {
+      "r2": 0.0938,
+      "mae": 1534.94,
+      "rmse": 2176.99
+    },
+    "fusion": {
+      "r2": 0.6852,
+      "mae": 953.94,
+      "rmse": 1275.45
+    },
+    "bayesien": {
+      "r2": 0.7521,
+      "mae": 874.34,
+      "std_moyenne": 0.161214,
+      "fourchette_tnd": 928.0,
+      "fourchette_pct": 26.5
+    },
+    "image_contribution": {
+      "r2_gain": -0.0679,
+      "mae_gain": -80.86,
+      "images_aident": false
+    },
+    "feature_importance": {
+      "tabulaire_pct": 80.5,
+      "image_pct": 19.5
+    }
+  },
+  "villa": {
+    "tabulaire": {
+      "r2": 0.8198,
+      "mae": 88587.49,
+      "rmse": 233206.32
+    },
+    "image_seule": {
+      "r2": -0.1536,
+      "mae": 306398.2,
+      "rmse": 590025.61
+    },
+    "fusion": {
+      "r2": 0.8092,
+      "mae": 95699.42,
+      "rmse": 239970.98
+    },
+    "bayesien": {
+      "r2": 0.8198,
+      "mae": 88652.22,
+      "std_moyenne": 0.272835,
+      "fourchette_tnd": 2917.0,
+      "fourchette_pct": 44.9
+    },
+    "image_contribution": {
+      "r2_gain": -0.0106,
+      "mae_gain": -7111.93,
+      "images_aident": false
+    },
+    "feature_importance": {
+      "tabulaire_pct": 97.4,
+      "image_pct": 2.6
+    }
+  },
+  "terrain": {
+    "tabulaire": {
+      "r2": 0.5805,
+      "mae": 363588.53,
+      "rmse": 771356.82
+    },
+    "image_seule": {
+      "r2": 0.024,
+      "mae": 549468.19,
+      "rmse": 1182051.05
+    },
+    "fusion": {
+      "r2": 0.5451,
+      "mae": 374206.97,
+      "rmse": 803224.28
+    },
+    "bayesien": {
+      "r2": 0.5807,
+      "mae": 363557.34,
+      "std_moyenne": 0.58337,
+      "fourchette_tnd": 312652.0,
+      "fourchette_pct": 96.0
+    },
+    "image_contribution": {
+      "r2_gain": -0.0354,
+      "mae_gain": -10618.44,
+      "images_aident": false
+    },
+    "feature_importance": {
+      "tabulaire_pct": 31.9,
+      "image_pct": 68.1
+    }
+  }
+}

@@ -1,0 +1,961 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EstateMind BO2 — Estimation Immobilière</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --gold:    #C9A84C;
+    --gold-lt: #E8D4A0;
+    --dark:    #0D0D0D;
+    --dark-2:  #161616;
+    --dark-3:  #1F1F1F;
+    --dark-4:  #2A2A2A;
+    --text:    #F0EDE8;
+    --text-2:  #A0998F;
+    --green:   #4CAF84;
+    --red:     #C94C4C;
+    --radius:  12px;
+  }
+
+  * { margin:0; padding:0; box-sizing:border-box; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--dark);
+    color: var(--text);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* ── HEADER ── */
+  header {
+    padding: 32px 48px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid #222;
+    position: sticky;
+    top: 0;
+    background: rgba(13,13,13,0.95);
+    backdrop-filter: blur(12px);
+    z-index: 100;
+  }
+
+  .logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: var(--gold);
+    letter-spacing: -0.02em;
+  }
+
+  .logo span { color: var(--text); }
+
+  .badge {
+    background: var(--dark-3);
+    border: 1px solid #333;
+    color: var(--text-2);
+    font-size: 0.75rem;
+    padding: 6px 14px;
+    border-radius: 100px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  /* ── MAIN LAYOUT ── */
+  main {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 48px 32px 80px;
+  }
+
+  h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 5vw, 3.2rem);
+    font-weight: 900;
+    line-height: 1.1;
+    margin-bottom: 12px;
+  }
+
+  h1 em {
+    color: var(--gold);
+    font-style: normal;
+  }
+
+  .subtitle {
+    color: var(--text-2);
+    font-size: 1rem;
+    margin-bottom: 48px;
+    font-weight: 300;
+  }
+
+  /* ── GRID ── */
+  .grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+  }
+
+  @media (max-width: 720px) {
+    .grid { grid-template-columns: 1fr; }
+    header { padding: 20px 24px; }
+    main { padding: 32px 20px; }
+  }
+
+  /* ── CARD ── */
+  .card {
+    background: var(--dark-2);
+    border: 1px solid #222;
+    border-radius: var(--radius);
+    padding: 28px;
+    transition: border-color 0.2s;
+  }
+
+  .card:hover { border-color: #333; }
+
+  .card-title {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--gold);
+    margin-bottom: 20px;
+    font-weight: 600;
+  }
+
+  /* ── FORM ELEMENTS ── */
+  .field { margin-bottom: 18px; }
+
+  label {
+    display: block;
+    font-size: 0.8rem;
+    color: var(--text-2);
+    margin-bottom: 7px;
+    font-weight: 500;
+  }
+
+  input, select {
+    width: 100%;
+    background: var(--dark-3);
+    border: 1px solid #2E2E2E;
+    border-radius: 8px;
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.9rem;
+    padding: 11px 14px;
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    appearance: none;
+  }
+
+  input:focus, select:focus {
+    border-color: var(--gold);
+    box-shadow: 0 0 0 3px rgba(201,168,76,0.12);
+  }
+
+  select { cursor: pointer; }
+
+  /* ── EQUIPEMENTS GRID ── */
+  .equip-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+  }
+
+  .equip-item {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    background: var(--dark-3);
+    border: 1px solid #2E2E2E;
+    border-radius: 8px;
+    padding: 10px 12px;
+    cursor: pointer;
+    transition: all 0.2s;
+    user-select: none;
+  }
+
+  .equip-item:hover { border-color: #444; }
+
+  .equip-item.active {
+    background: rgba(201,168,76,0.1);
+    border-color: var(--gold);
+  }
+
+  .equip-item input[type="checkbox"] { display: none; }
+
+  .equip-icon { font-size: 1.1rem; }
+
+  .equip-label {
+    font-size: 0.78rem;
+    color: var(--text-2);
+    font-weight: 500;
+  }
+
+  .equip-item.active .equip-label { color: var(--gold-lt); }
+
+  /* ── UPLOAD ZONE ── */
+  .upload-zone {
+    border: 2px dashed #2E2E2E;
+    border-radius: var(--radius);
+    padding: 32px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.2s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .upload-zone:hover, .upload-zone.dragover {
+    border-color: var(--gold);
+    background: rgba(201,168,76,0.04);
+  }
+
+  .upload-zone input { display: none; }
+
+  .upload-icon { font-size: 2rem; margin-bottom: 12px; }
+
+  .upload-text {
+    font-size: 0.85rem;
+    color: var(--text-2);
+    margin-bottom: 6px;
+  }
+
+  .upload-hint {
+    font-size: 0.72rem;
+    color: #555;
+  }
+
+  /* ── PREVIEWS ── */
+  .previews {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-top: 16px;
+  }
+
+  .preview-item {
+    position: relative;
+    width: 80px;
+    height: 80px;
+    border-radius: 8px;
+    overflow: hidden;
+    border: 1px solid #333;
+  }
+
+  .preview-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .preview-remove {
+    position: absolute;
+    top: 4px;
+    right: 4px;
+    background: rgba(0,0,0,0.7);
+    border: none;
+    color: #fff;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 0.65rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* ── SUBMIT ── */
+  .btn-estimate {
+    width: 100%;
+    background: var(--gold);
+    color: var(--dark);
+    border: none;
+    border-radius: 10px;
+    padding: 16px 24px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    margin-top: 8px;
+    letter-spacing: 0.02em;
+  }
+
+  .btn-estimate:hover {
+    background: var(--gold-lt);
+    transform: translateY(-1px);
+    box-shadow: 0 8px 24px rgba(201,168,76,0.2);
+  }
+
+  .btn-estimate:active { transform: translateY(0); }
+
+  .btn-estimate:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+  }
+
+  /* ── RESULT PANEL ── */
+  #result-panel {
+    display: none;
+    grid-column: 1 / -1;
+    background: var(--dark-2);
+    border: 1px solid var(--gold);
+    border-radius: var(--radius);
+    padding: 36px;
+    animation: fadeIn 0.4s ease;
+  }
+
+  @keyframes fadeIn {
+    from { opacity:0; transform:translateY(16px); }
+    to   { opacity:1; transform:translateY(0); }
+  }
+
+  .result-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    margin-bottom: 32px;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+
+  .result-price {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.2rem, 6vw, 3.8rem);
+    font-weight: 900;
+    color: var(--gold);
+    line-height: 1;
+  }
+
+  .result-price-label {
+    font-size: 0.75rem;
+    color: var(--text-2);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 8px;
+  }
+
+  .result-pm2 {
+    font-size: 0.9rem;
+    color: var(--text-2);
+    margin-top: 6px;
+  }
+
+  .result-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin-bottom: 24px;
+  }
+
+  @media (max-width: 600px) {
+    .result-grid { grid-template-columns: 1fr 1fr; }
+  }
+
+  .result-stat {
+    background: var(--dark-3);
+    border-radius: 10px;
+    padding: 16px;
+  }
+
+  .result-stat-label {
+    font-size: 0.7rem;
+    color: var(--text-2);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 6px;
+  }
+
+  .result-stat-value {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--text);
+  }
+
+  /* Fourchette bar */
+  .fourchette-bar {
+    background: var(--dark-3);
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 20px;
+  }
+
+  .fourchette-label {
+    font-size: 0.7rem;
+    color: var(--text-2);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 12px;
+  }
+
+  .bar-track {
+    background: var(--dark-4);
+    border-radius: 100px;
+    height: 8px;
+    position: relative;
+    margin: 8px 0;
+  }
+
+  .bar-fill {
+    background: linear-gradient(90deg, var(--gold), var(--gold-lt));
+    border-radius: 100px;
+    height: 100%;
+    transition: width 0.8s ease;
+  }
+
+  .bar-labels {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.78rem;
+    color: var(--text-2);
+    margin-top: 6px;
+  }
+
+  /* Analyse image */
+  .image-analysis {
+    background: var(--dark-3);
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 20px;
+    display: none;
+  }
+
+  .analysis-tags {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-top: 12px;
+  }
+
+  .tag {
+    padding: 6px 14px;
+    border-radius: 100px;
+    font-size: 0.78rem;
+    font-weight: 500;
+  }
+
+  .tag-gold  { background: rgba(201,168,76,0.15); color: var(--gold-lt); }
+  .tag-green { background: rgba(76,175,132,0.15); color: var(--green); }
+  .tag-blue  { background: rgba(76,132,200,0.15); color: #7EB8FF; }
+
+  /* Confiance bar */
+  .confiance-section { margin-top: 16px; }
+
+  .confiance-bar-wrap {
+    background: var(--dark-4);
+    border-radius: 100px;
+    height: 6px;
+    margin-top: 8px;
+  }
+
+  .confiance-bar-fill {
+    height: 100%;
+    border-radius: 100px;
+    transition: width 0.8s ease;
+  }
+
+  /* Loading */
+  .loading {
+    display: none;
+    text-align: center;
+    padding: 24px;
+    grid-column: 1 / -1;
+  }
+
+  .spinner {
+    width: 36px;
+    height: 36px;
+    border: 3px solid #333;
+    border-top-color: var(--gold);
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+    margin: 0 auto 12px;
+  }
+
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  .loading-text {
+    color: var(--text-2);
+    font-size: 0.85rem;
+  }
+
+  /* Responsive row-2 */
+  .row-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+  }
+
+  .col-span-2 { grid-column: 1 / -1; }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">Estate<span>Mind</span></div>
+  <div class="badge">BO2 — Agent Valuation</div>
+</header>
+
+<main>
+  <h1>Estimez votre bien<br><em>immobilier</em> en Tunisie</h1>
+  <p class="subtitle">Remplissez les informations ci-dessous et ajoutez des photos pour une estimation précise.</p>
+
+  <div class="grid">
+
+    <!-- ── LOCALISATION ── -->
+    <div class="card">
+      <div class="card-title">📍 Localisation</div>
+
+      <div class="row-2">
+        <div class="field">
+          <label>Type de bien</label>
+          <select id="type_bien">
+            <option value="Appartement">Appartement</option>
+            <option value="Maison">Maison</option>
+            <option value="Villa">Villa</option>
+            <option value="Terrain">Terrain</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>Transaction</label>
+          <select id="transaction">
+            <option value="vente">Vente</option>
+            <option value="location">Location</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="row-2">
+        <div class="field">
+          <label>Gouvernorat</label>
+          <select id="gouvernorat">
+            <option value="Tunis">Tunis</option>
+            <option value="Ariana">Ariana</option>
+            <option value="Ben Arous">Ben Arous</option>
+            <option value="Manouba">Manouba</option>
+            <option value="Nabeul">Nabeul</option>
+            <option value="Bizerte">Bizerte</option>
+            <option value="Sousse">Sousse</option>
+            <option value="Monastir">Monastir</option>
+            <option value="Sfax">Sfax</option>
+            <option value="Mahdia">Mahdia</option>
+            <option value="Kairouan">Kairouan</option>
+            <option value="Zaghouan">Zaghouan</option>
+            <option value="Médenine">Médenine</option>
+            <option value="Gabès">Gabès</option>
+            <option value="Gafsa">Gafsa</option>
+            <option value="Tozeur">Tozeur</option>
+            <option value="Kébili">Kébili</option>
+            <option value="Tataouine">Tataouine</option>
+            <option value="Béja">Béja</option>
+            <option value="Jendouba">Jendouba</option>
+            <option value="Le Kef">Le Kef</option>
+            <option value="Siliana">Siliana</option>
+            <option value="Sidi Bouzid">Sidi Bouzid</option>
+            <option value="Kasserine">Kasserine</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>Ville</label>
+          <input type="text" id="ville" placeholder="ex: La Marsa" />
+        </div>
+      </div>
+
+      <div class="field">
+        <label>Quartier <span style="color:#555">(optionnel)</span></label>
+        <input type="text" id="quartier" placeholder="ex: Chotrana 1, Sahloul..." />
+      </div>
+    </div>
+
+    <!-- ── CARACTERISTIQUES ── -->
+    <div class="card">
+      <div class="card-title">📐 Caractéristiques</div>
+
+      <div class="row-2">
+        <div class="field">
+          <label>Surface (m²)</label>
+          <input type="number" id="surface_m2" placeholder="120" min="10" max="10000" />
+        </div>
+        <div class="field">
+          <label>Nb. pièces</label>
+          <input type="number" id="nb_pieces" placeholder="3" min="1" max="20" />
+        </div>
+      </div>
+
+      <div class="row-2">
+        <div class="field">
+          <label>Nb. chambres</label>
+          <input type="number" id="nb_chambres" placeholder="2" min="0" max="20" />
+        </div>
+        <div class="field">
+          <label>Nb. salles de bain</label>
+          <input type="number" id="nb_sdb" placeholder="1" min="0" max="10" />
+        </div>
+      </div>
+    </div>
+
+    <!-- ── EQUIPEMENTS ── -->
+    <div class="card col-span-2">
+      <div class="card-title">✨ Équipements & Prestations</div>
+      <div class="equip-grid" id="equip-grid">
+        <div class="equip-item" onclick="toggleEquip(this, 'has_piscine')"><span class="equip-icon">🏊</span><span class="equip-label">Piscine</span></div>
+        <div class="equip-item" onclick="toggleEquip(this, 'has_jardin')"><span class="equip-icon">🌿</span><span class="equip-label">Jardin</span></div>
+        <div class="equip-item" onclick="toggleEquip(this, 'has_garage')"><span class="equip-icon">🚗</span><span class="equip-label">Garage</span></div>
+        <div class="equip-item" onclick="toggleEquip(this, 'has_vue_mer')"><span class="equip-icon">🌊</span><span class="equip-label">Vue mer</span></div>
+        <div class="equip-item" onclick="toggleEquip(this, 'has_terrasse')"><span class="equip-icon">🏗️</span><span class="equip-label">Terrasse</span></div>
+        <div class="equip-item" onclick="toggleEquip(this, 'has_ascenseur')"><span class="equip-icon">🛗</span><span class="equip-label">Ascenseur</span></div>
+        <div class="equip-item" onclick="toggleEquip(this, 'has_meuble')"><span class="equip-icon">🛋️</span><span class="equip-label">Meublé</span></div>
+        <div class="equip-item" onclick="toggleEquip(this, 'has_climatisation')"><span class="equip-icon">❄️</span><span class="equip-label">Climatisation</span></div>
+        <div class="equip-item" onclick="toggleEquip(this, 'has_chauffage')"><span class="equip-icon">🔥</span><span class="equip-label">Chauffage</span></div>
+        <div class="equip-item" onclick="toggleEquip(this, 'has_securite')"><span class="equip-icon">🔒</span><span class="equip-label">Sécurité</span></div>
+        <div class="equip-item" onclick="toggleEquip(this, 'has_cuisine_equip')"><span class="equip-icon">👨‍🍳</span><span class="equip-label">Cuisine équip.</span></div>
+        <div class="equip-item" onclick="toggleEquip(this, 'has_concierge')"><span class="equip-icon">🏢</span><span class="equip-label">Concierge</span></div>
+        <div class="equip-item" onclick="toggleEquip(this, 'has_standing')"><span class="equip-icon">💎</span><span class="equip-label">Standing</span></div>
+        <div class="equip-item" onclick="toggleEquip(this, 'has_vue_montagne')"><span class="equip-icon">⛰️</span><span class="equip-label">Vue montagne</span></div>
+        <div class="equip-item" onclick="toggleEquip(this, 'has_cheminee')"><span class="equip-icon">🕯️</span><span class="equip-label">Cheminée</span></div>
+      </div>
+    </div>
+
+    <!-- ── PHOTOS ── -->
+    <div class="card col-span-2">
+      <div class="card-title">📸 Photos du bien</div>
+      <div class="upload-zone" id="upload-zone"
+           onclick="document.getElementById('photo-input').click()"
+           ondragover="handleDragOver(event)"
+           ondragleave="handleDragLeave(event)"
+           ondrop="handleDrop(event)">
+        <input type="file" id="photo-input" multiple accept="image/*"
+               onchange="handleFiles(this.files)">
+        <div class="upload-icon">📷</div>
+        <div class="upload-text">Cliquez ou glissez vos photos ici</div>
+        <div class="upload-hint">JPG, PNG, AVIF — plusieurs photos possibles</div>
+      </div>
+      <div class="previews" id="previews"></div>
+    </div>
+
+    <!-- ── BOUTON ── -->
+    <div class="card col-span-2" style="padding:20px">
+      <button class="btn-estimate" id="btn-estimate" onclick="estimer()">
+        ✦ Estimer le prix
+      </button>
+    </div>
+
+    <!-- ── LOADING ── -->
+    <div class="loading" id="loading">
+      <div class="spinner"></div>
+      <div class="loading-text">Analyse en cours — BERT + CLIP + LightGBM...</div>
+    </div>
+
+    <!-- ── RESULT ── -->
+    <div id="result-panel">
+      <div class="result-header">
+        <div>
+          <div class="result-price-label">Prix estimé</div>
+          <div class="result-price" id="r-prix">—</div>
+          <div class="result-pm2" id="r-pm2">— TND/m²</div>
+        </div>
+        <div style="text-align:right">
+          <div class="result-price-label">Segment</div>
+          <div style="font-size:1.1rem;font-weight:600" id="r-segment">—</div>
+          <div style="font-size:0.8rem;color:var(--text-2);margin-top:4px" id="r-gouvernorat">—</div>
+        </div>
+      </div>
+
+      <!-- Fourchette -->
+      <div class="fourchette-bar">
+        <div class="fourchette-label">Fourchette de prix</div>
+        <div style="display:flex;justify-content:space-between;font-size:0.85rem;color:var(--text-2);margin-bottom:8px">
+          <span id="r-min">—</span>
+          <span id="r-max">—</span>
+        </div>
+        <div class="bar-track">
+          <div class="bar-fill" id="r-bar" style="width:50%"></div>
+        </div>
+        <div class="bar-labels">
+          <span>Min</span><span>Estimation</span><span>Max</span>
+        </div>
+      </div>
+
+      <!-- Stats grid -->
+      <div class="result-grid">
+        <div class="result-stat">
+          <div class="result-stat-label">Incertitude</div>
+          <div class="result-stat-value" id="r-mape">—</div>
+        </div>
+        <div class="result-stat">
+          <div class="result-stat-label">Confiance R²</div>
+          <div class="result-stat-value" id="r-conf">—</div>
+        </div>
+        <div class="result-stat">
+          <div class="result-stat-label">Ville enc.</div>
+          <div class="result-stat-value" id="r-venc">—</div>
+        </div>
+      </div>
+
+      <!-- Analyse image -->
+      <div class="image-analysis" id="r-image-analysis">
+        <div class="fourchette-label">🤖 Analyse visuelle (CLIP + EfficientNet)</div>
+        <div class="analysis-tags" id="r-tags"></div>
+      </div>
+
+      <!-- Confiance -->
+      <div class="confiance-section">
+        <div style="font-size:0.7rem;color:var(--text-2);text-transform:uppercase;letter-spacing:0.08em">
+          Niveau de confiance du modèle
+        </div>
+        <div class="confiance-bar-wrap">
+          <div class="confiance-bar-fill" id="r-conf-bar" style="width:0%"></div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- .grid -->
+</main>
+
+<script>
+// ── State ──────────────────────────────────────────────
+const equips = {};
+const photos  = [];
+
+// ── Equipements ────────────────────────────────────────
+function toggleEquip(el, name) {
+  event.preventDefault();
+  el.classList.toggle('active');
+  equips[name] = el.classList.contains('active') ? 1 : 0;
+}
+
+// ── Photos ─────────────────────────────────────────────
+function handleFiles(files) {
+  Array.from(files).forEach(addPhoto);
+}
+
+function handleDragOver(e) {
+  e.preventDefault();
+  document.getElementById('upload-zone').classList.add('dragover');
+}
+function handleDragLeave(e) {
+  document.getElementById('upload-zone').classList.remove('dragover');
+}
+function handleDrop(e) {
+  e.preventDefault();
+  document.getElementById('upload-zone').classList.remove('dragover');
+  handleFiles(e.dataTransfer.files);
+}
+
+function addPhoto(file) {
+  if (!file.type.startsWith('image/')) return;
+  const reader = new FileReader();
+  reader.onload = (e) => {
+    const dataUrl = e.target.result;
+    photos.push(dataUrl);
+    renderPreviews();
+  };
+  reader.readAsDataURL(file);
+}
+
+function removePhoto(idx) {
+  photos.splice(idx, 1);
+  renderPreviews();
+}
+
+function renderPreviews() {
+  const container = document.getElementById('previews');
+  container.innerHTML = photos.map((src, i) => `
+    <div class="preview-item">
+      <img src="${src}" alt="photo ${i+1}">
+      <button class="preview-remove" onclick="removePhoto(${i})">✕</button>
+    </div>
+  `).join('');
+}
+
+// ── API URL ────────────────────────────────────────────
+const API_URL = 'http://localhost:8000';
+
+// ── Estimation ─────────────────────────────────────────
+async function estimer() {
+  const btn     = document.getElementById('btn-estimate');
+  const loading = document.getElementById('loading');
+  const panel   = document.getElementById('result-panel');
+
+  // Validation
+  const surface = parseFloat(document.getElementById('surface_m2').value);
+  const ville   = document.getElementById('ville').value.trim();
+  if (!surface || surface < 10) {
+    alert('Veuillez entrer une surface valide (minimum 10 m²)'); return;
+  }
+  if (!ville) {
+    alert('Veuillez entrer une ville'); return;
+  }
+
+  btn.disabled = true;
+  panel.style.display  = 'none';
+  loading.style.display = 'block';
+
+  try {
+    // Construire FormData pour envoyer photos + données
+    const formData = new FormData();
+
+    // Champs texte
+    const fields = {
+      type_bien:    document.getElementById('type_bien').value,
+      transaction:  document.getElementById('transaction').value,
+      ville:        ville,
+      gouvernorat:  document.getElementById('gouvernorat').value,
+      surface_m2:   surface,
+      quartier:     document.getElementById('quartier').value || '',
+      nb_pieces:    parseInt(document.getElementById('nb_pieces').value) || 3,
+      nb_chambres:  parseInt(document.getElementById('nb_chambres').value) || 2,
+      nb_sdb:       parseInt(document.getElementById('nb_sdb').value) || 1,
+    };
+
+    // Equipements
+    const equipNames = [
+      'has_piscine','has_jardin','has_garage','has_vue_mer','has_terrasse',
+      'has_ascenseur','has_meuble','has_climatisation','has_chauffage',
+      'has_securite','has_cuisine_equip','has_concierge','has_standing',
+      'has_vue_montagne','has_cheminee','has_double_vitrage','has_porte_blindee'
+    ];
+    equipNames.forEach(name => {
+      fields[name] = equips[name] || 0;
+    });
+
+    // Ajouter tous les champs
+    Object.entries(fields).forEach(([k,v]) => formData.append(k, v));
+
+    // Ajouter les photos
+    if (photos.length > 0) {
+      for (let i = 0; i < photos.length; i++) {
+        // Convertir dataURL en Blob
+        const res  = await fetch(photos[i]);
+        const blob = await res.blob();
+        formData.append('photos', blob, `photo_${i+1}.jpg`);
+      }
+    }
+
+    // Appel API
+    const response = await fetch(`${API_URL}/estimer-image`, {
+      method: 'POST',
+      body:   formData,
+    });
+
+    if (!response.ok) {
+      const err = await response.json();
+      throw new Error(err.detail || 'Erreur serveur');
+    }
+
+    const result = await response.json();
+    afficherResultat(result, fields);
+
+  } catch (error) {
+    console.error(error);
+    // Fallback simulation si API non disponible
+    console.warn('API non disponible — simulation locale');
+    afficherSimulation();
+  } finally {
+    loading.style.display = 'none';
+    btn.disabled = false;
+  }
+}
+
+function afficherResultat(result, fields) {
+  const panel = document.getElementById('result-panel');
+  panel.style.display = 'block';
+
+  const fmt = (n) => Math.round(n).toLocaleString('fr-TN') + ' TND';
+  const d   = result.details || {};
+
+  document.getElementById('r-prix').textContent    = fmt(result.prix_estime);
+  document.getElementById('r-pm2').textContent     =
+    (d.prix_m2||0).toLocaleString('fr-TN') + ' TND/m²';
+  document.getElementById('r-min').textContent     = fmt(result.fourchette_min);
+  document.getElementById('r-max').textContent     = fmt(result.fourchette_max);
+  document.getElementById('r-mape').textContent    = '±' + Math.round((d.fourchette_pct||24)) + '%';
+  document.getElementById('r-conf').textContent    = Math.round(result.confiance*100) + '%';
+  document.getElementById('r-venc').textContent    = (d.ville_enc||0).toFixed(3);
+  document.getElementById('r-segment').textContent = result.segment || '—';
+  document.getElementById('r-gouvernorat').textContent =
+    (d.gouvernorat||'') + ' — ' + (fields.ville||'');
+
+  // Barre confiance
+  const confBar = document.getElementById('r-conf-bar');
+  const confPct = result.confiance * 100;
+  confBar.style.width = confPct + '%';
+  confBar.style.background = confPct >= 70
+    ? 'linear-gradient(90deg, var(--green), #7ED3A0)'
+    : confPct >= 55
+    ? 'linear-gradient(90deg, var(--gold), var(--gold-lt))'
+    : 'linear-gradient(90deg, var(--red), #E08080)';
+
+  // Analyse image
+  const imgAnalysis = document.getElementById('r-image-analysis');
+  const tagsEl      = document.getElementById('r-tags');
+
+  if (d.image_analysee && photos.length > 0) {
+    imgAnalysis.style.display = 'block';
+    const standLabel = {1:'Modeste',2:'Standard',3:'Luxe'}[d.standing_score] || '?';
+    const etatLabel  = d.etat_score === 1 ? 'Rénové' : 'Ancien';
+    tagsEl.innerHTML = [
+      `<span class="tag tag-blue">📸 ${photos.length} photo(s) analysée(s)</span>`,
+      `<span class="tag tag-gold">✨ Standing : ${standLabel}</span>`,
+      `<span class="tag tag-green">🏠 État : ${etatLabel}</span>`,
+    ].join('');
+  } else {
+    imgAnalysis.style.display = 'none';
+  }
+
+  panel.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+function afficherSimulation() {
+  // Simulation locale si API non disponible
+  const panel = document.getElementById('result-panel');
+  panel.style.display = 'block';
+
+  const surface = parseFloat(document.getElementById('surface_m2').value);
+  const gov     = document.getElementById('gouvernorat').value;
+  const trans   = document.getElementById('transaction').value;
+  const type_b  = document.getElementById('type_bien').value;
+  const ville   = document.getElementById('ville').value;
+
+  const pm2_base = {
+    vente:    {'Tunis':7000,'Ariana':4000,'Nabeul':2800,'Sousse':2500,'default':2000},
+    location: {'Tunis':55,'Ariana':30,'Nabeul':20,'Sousse':18,'default':14}
+  };
+  const base = pm2_base[trans][gov] || pm2_base[trans]['default'];
+  let mult = type_b==='Villa'?1.4:type_b==='Maison'?1.2:type_b==='Terrain'?0.3:1.0;
+  if (equips.has_piscine) mult += 0.12;
+  if (equips.has_vue_mer) mult += 0.15;
+  if (equips.has_garage)  mult += 0.05;
+
+  const pm2   = Math.round(base * mult);
+  const prix  = Math.round(pm2 * surface);
+  const fourch= Math.round(prix * 0.22);
+  const r2    = trans==='vente' ? 0.67 : 0.70;
+
+  const fmt = (n) => n.toLocaleString('fr-TN') + ' TND';
+  document.getElementById('r-prix').textContent    = fmt(prix) + ' *';
+  document.getElementById('r-pm2').textContent     = pm2.toLocaleString('fr-TN') + ' TND/m² *';
+  document.getElementById('r-min').textContent     = fmt(prix - fourch);
+  document.getElementById('r-max').textContent     = fmt(prix + fourch);
+  document.getElementById('r-mape').textContent    = '±22%';
+  document.getElementById('r-conf').textContent    = Math.round(r2*100) + '%';
+  document.getElementById('r-venc').textContent    = '—';
+  document.getElementById('r-segment').textContent = type_b==='Terrain'?'Foncier':`Résidentiel ${trans}`;
+  document.getElementById('r-gouvernorat').textContent = gov + ' — ' + ville + ' (simulation)';
+
+  const confBar = document.getElementById('r-conf-bar');
+  confBar.style.width = (r2*100) + '%';
+  confBar.style.background = 'linear-gradient(90deg, var(--gold), var(--gold-lt))';
+  document.getElementById('r-image-analysis').style.display = 'none';
+
+  panel.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+</script>
+
+</body>
+</html>

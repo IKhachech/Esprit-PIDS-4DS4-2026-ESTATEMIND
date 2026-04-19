@@ -1,0 +1,202 @@
+{
+  "residentiel_location": {
+    "baseline_ridge": {
+      "mae": 627.06,
+      "rmse": 955.36,
+      "r2": 0.3798
+    },
+    "xgb_sans_image": {
+      "mae": 454.92,
+      "rmse": 684.38,
+      "r2": 0.6817
+    },
+    "xgb_avec_image": {
+      "mae": 451.74,
+      "rmse": 688.29,
+      "r2": 0.6781
+    },
+    "image_contribution": {
+      "r2_gain": -0.0036,
+      "mae_gain": 3.18
+    },
+    "feature_importance_split": {
+      "tabulaire_pct": 47.6,
+      "image_pct": 52.4
+    }
+  },
+  "residentiel_vente": {
+    "baseline_ridge": {
+      "mae": 149064.9,
+      "rmse": 228673.73,
+      "r2": 0.4008
+    },
+    "xgb_sans_image": {
+      "mae": 109850.42,
+      "rmse": 179354.8,
+      "r2": 0.6314
+    },
+    "xgb_avec_image": {
+      "mae": 107594.07,
+      "rmse": 171823.91,
+      "r2": 0.6617
+    },
+    "image_contribution": {
+      "r2_gain": 0.0303,
+      "mae_gain": 2256.35
+    },
+    "feature_importance_split": {
+      "tabulaire_pct": 37.0,
+      "image_pct": 63.0
+    }
+  },
+  "foncier_location": {
+    "baseline_ridge": {
+      "mae": 92094.34,
+      "rmse": 130904.42,
+      "r2": -0.1275
+    },
+    "xgb_sans_image": {
+      "mae": 96339.37,
+      "rmse": 137982.24,
+      "r2": -0.2528
+    },
+    "xgb_avec_image": {
+      "mae": 73392.49,
+      "rmse": 107455.33,
+      "r2": 0.2402
+    },
+    "image_contribution": {
+      "r2_gain": 0.493,
+      "mae_gain": 22946.88
+    },
+    "feature_importance_split": {
+      "tabulaire_pct": 7.5,
+      "image_pct": 92.5
+    }
+  },
+  "foncier_vente": {
+    "baseline_ridge": {
+      "mae": 357192.45,
+      "rmse": 622069.67,
+      "r2": 0.0251
+    },
+    "xgb_sans_image": {
+      "mae": 264408.47,
+      "rmse": 489949.05,
+      "r2": 0.3952
+    },
+    "xgb_avec_image": {
+      "mae": 260067.39,
+      "rmse": 477038.52,
+      "r2": 0.4267
+    },
+    "image_contribution": {
+      "r2_gain": 0.0315,
+      "mae_gain": 4341.08
+    },
+    "feature_importance_split": {
+      "tabulaire_pct": 26.9,
+      "image_pct": 73.1
+    }
+  },
+  "commercial_location": {
+    "baseline_ridge": {
+      "mae": 9307.88,
+      "rmse": 30402.25,
+      "r2": -0.3204
+    },
+    "xgb_sans_image": {
+      "mae": 8981.57,
+      "rmse": 27514.63,
+      "r2": -0.0815
+    },
+    "xgb_avec_image": {
+      "mae": 7541.69,
+      "rmse": 25506.32,
+      "r2": 0.0706
+    },
+    "image_contribution": {
+      "r2_gain": 0.1521,
+      "mae_gain": 1439.88
+    },
+    "feature_importance_split": {
+      "tabulaire_pct": 11.7,
+      "image_pct": 88.3
+    }
+  },
+  "commercial_all": {
+    "baseline_ridge": {
+      "mae": 85599.74,
+      "rmse": 297713.37,
+      "r2": 0.0192
+    },
+    "xgb_sans_image": {
+      "mae": 61727.05,
+      "rmse": 199660.45,
+      "r2": 0.5589
+    },
+    "xgb_avec_image": {
+      "mae": 70365.96,
+      "rmse": 250061.37,
+      "r2": 0.308
+    },
+    "image_contribution": {
+      "r2_gain": -0.2509,
+      "mae_gain": -8638.91
+    },
+    "feature_importance_split": {
+      "tabulaire_pct": 26.4,
+      "image_pct": 73.6
+    }
+  },
+  "divers_location": {
+    "baseline_ridge": {
+      "mae": 656.76,
+      "rmse": 1493.73,
+      "r2": -0.0234
+    },
+    "xgb_sans_image": {
+      "mae": 700.07,
+      "rmse": 1502.42,
+      "r2": -0.0353
+    },
+    "xgb_avec_image": {
+      "mae": 710.19,
+      "rmse": 1505.3,
+      "r2": -0.0393
+    },
+    "image_contribution": {
+      "r2_gain": -0.004,
+      "mae_gain": -10.12
+    },
+    "feature_importance_split": {
+      "tabulaire_pct": 100.0,
+      "image_pct": 0.0
+    }
+  },
+  "divers_all": {
+    "baseline_ridge": {
+      "mae": 12230.16,
+      "rmse": 43546.22,
+      "r2": 0.0012
+    },
+    "xgb_sans_image": {
+      "mae": 15190.95,
+      "rmse": 48195.21,
+      "r2": -0.2235
+    },
+    "xgb_avec_image": {
+      "mae": 15110.32,
+      "rmse": 48063.56,
+      "r2": -0.2168
+    },
+    "image_contribution": {
+      "r2_gain": 0.0067,
+      "mae_gain": 80.63
+    },
+    "feature_importance_split": {
+      "tabulaire_pct": 100.0,
+      "image_pct": 0.0
+    }
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "mae": 501.7299346886916,
+  "r2": 0.7044549673686207,
+  "mape": 21.381739162865674,
+  "r2_pm2": 0.6206737822889763,
+  "n_train": 5864,
+  "n_test": 1467,
+  "bert_dims": 8,
+  "segment": "residentiel_location",
+  "target_mode": "prix_m2",
+  "model": "XGBoost+BERT_residentiel_location"
+}
