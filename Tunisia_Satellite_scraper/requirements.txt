@@ -1,0 +1,9 @@
+requests==2.31.0
+pandas==2.2.0
+beautifulsoup4==4.12.3
+
+# Optional for visualization
+matplotlib==3.8.2
+seaborn==0.13.1
+folium==0.15.1
+geopandas==0.14.2
